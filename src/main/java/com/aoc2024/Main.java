@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.aoc2024.solver.Day13;
 
 public class Main {
   private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
@@ -1302,7 +1303,55 @@ public class Main {
     LOGGER.debug("part2 {}", counter.longValue());
   }
 
+  private static void day13() {
+    List<String> strList = getFileStrList("day13.txt");
+    List<Day13> day13List = new ArrayList<>();
+    for (int i = 0; i < strList.size() - 2; i++) {
+      String[] btnAStr = strList.get(i).split(",");
+      String[] btnBStr = strList.get(i + 1).split(",");
+      String[] prizeStr = strList.get(i + 2).split(",");
+      Day13 day13 = new Day13();
+      day13.buttonA = new com.aoc2024.solver.Node(
+          NumberUtils.toInt(StringUtils.substringAfter(btnAStr[0], "+")),
+          NumberUtils.toInt(StringUtils.substringAfter(btnAStr[1], "+")));
+      day13.buttonB = new com.aoc2024.solver.Node(
+          NumberUtils.toInt(StringUtils.substringAfter(btnBStr[0], "+")),
+          NumberUtils.toInt(StringUtils.substringAfter(btnBStr[1], "+")));
+      day13.prize = new com.aoc2024.solver.Node(
+          NumberUtils.toInt(StringUtils.substringAfter(prizeStr[0], "=")),
+          NumberUtils.toInt(StringUtils.substringAfter(prizeStr[1], "=")));
+      i += 3;
+      day13List.add(day13);
+    }
+    // LOGGER.debug("@@ {}", day13List);
+
+    AtomicLong tokens = new AtomicLong();
+    day13List.stream().forEach(day13 -> {
+      com.aoc2024.solver.Node solution = day13.getSolution();
+      if (solution != null) {
+        // LOGGER.debug("@@ {} {}", day13.prize, solution);
+        tokens.addAndGet(solution.x() * 3 + solution.y());
+      }
+    });
+    LOGGER.debug("part1 {}", tokens.get());
+
+    for (Day13 day13 : day13List) {
+      day13.prize = new com.aoc2024.solver.Node(day13.prize.x() + 10000000000000L,
+          day13.prize.y() + 10000000000000L);
+    }
+    
+    tokens.set(0);
+    day13List.stream().forEach(day13 -> {
+      com.aoc2024.solver.Node solution = day13.getSolutionPart2();
+      if (solution != null) {
+        // LOGGER.debug("@@ {} {}", day13.prize, solution);
+        tokens.addAndGet(solution.x() * 3 + solution.y());
+      }
+    });
+    LOGGER.debug("part2 {}", tokens.get());
+  }
+
   public static void main(String[] args) {
-    day12();
+    day13();
   }
 }
