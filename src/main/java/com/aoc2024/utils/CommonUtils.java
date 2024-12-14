@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
@@ -23,9 +24,14 @@ public class CommonUtils {
   }
 
   public static void print2dChar(char[][] map) {
-    // Print
-    for (char[] row : map) {
+    for (var row : map) {
       LOGGER.debug("{}", row);
+    }
+  }
+
+  public static void print2dString(String[][] map) {
+    for (var row : map) {
+      LOGGER.debug("{} ", Arrays.toString(row));
     }
   }
 }
