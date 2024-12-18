@@ -156,10 +156,9 @@ public class Day15 implements AocPuzzle {
           if (ArrayUtils.contains(tempMap[i], '$')) {
             for (int j = 0; j < tempMap[i].length; j++) {
               if (tempMap[i][j] == '$') {
-                result = result && tempMap[i - 1][j] == '.';
+                result = result && (tempMap[i - 1][j] == '.' || tempMap[i - 1][j] == '$');
               }
             }
-            break;
           }
         }
       } else if (move == 'v') {
@@ -167,10 +166,9 @@ public class Day15 implements AocPuzzle {
           if (ArrayUtils.contains(tempMap[i], '$')) {
             for (int j = 0; j < tempMap[i].length; j++) {
               if (tempMap[i][j] == '$') {
-                result = result && tempMap[i + 1][j] == '.';
+                result = result && (tempMap[i + 1][j] == '.' || tempMap[i + 1][j] == '$');
               }
             }
-            break;
           }
         }
       }
@@ -284,7 +282,7 @@ public class Day15 implements AocPuzzle {
       robotPos = moveRobot2(map, move, robotPos);
       // CommonUtils.print2dChar(map);
     }
-    CommonUtils.print2dChar(map);
+    // CommonUtils.print2dChar(map);
     LOGGER.debug("part2 {} {}", abc, getGPSSum2(map));
   }
 }
